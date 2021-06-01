@@ -10,6 +10,7 @@ const getRandomInteger = (min, max) => {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+getRandomInteger(5, 9);
 
 // Функция, возвращающая случайное число с плавающей точкой из переданного диапазона включительно
 const getRandomFloat = (min, max, decimalPlace) => {
@@ -23,3 +24,4 @@ const getRandomFloat = (min, max, decimalPlace) => {
   const float = Math.random() * (max - min + 1) + min;
   return float.toFixed(decimalPlace);
 };
+getRandomFloat(6, 9, 2);
