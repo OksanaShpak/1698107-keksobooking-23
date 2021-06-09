@@ -76,7 +76,7 @@ const createAd = () => {
       type: getRandomArrayElement(OFFER_TYPE),
       rooms: getRandomPositiveInteger(1, 5),
       guests: getRandomPositiveInteger(1, 10),
-      checkin: getRandomArrayElement(shuffleArray(OFFER_CHECKSET)),
+      checkin: getRandomArrayElement(OFFER_CHECKSET),
       checkout: getRandomArrayElement(OFFER_CHECKSET),
       features: shuffleArray(OFFER_FEATURES).slice(0, getRandomPositiveInteger(1, OFFER_FEATURES.length - 1)),
       description: OFFER_DESCRIPTION,
@@ -88,5 +88,4 @@ const createAd = () => {
 
 const similarAds = new Array(SIMILAR_AD_COUNT).fill(null).map(() => createAd());
 
-console.log(similarAds);
-// similarAds();
+similarAds();
