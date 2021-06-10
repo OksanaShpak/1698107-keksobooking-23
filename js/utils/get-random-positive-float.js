@@ -21,4 +21,4 @@ function getRandomPositiveFloat(a, b, digits = 1) {
   return result.toFixed(digits);
 }
 
-getRandomPositiveFloat();
+export { getRandomPositiveFloat };
