@@ -28,3 +28,5 @@ function getRandomPositiveInteger(a, b) {
 }
 
 getRandomPositiveInteger();
+
+export { getRandomPositiveInteger };

@@ -1,64 +1,19 @@
-const AVATAR_RANGE = {
-  MIN: 1,
-  MAX: 8,
-};
-const OFFER_TITLE = 'Wonderful property in Tokyo';
-const OFFER_TYPE = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-const OFFER_CHECKSET = ['12:00', '13:00', '14:00'];
-const OFFER_FEATURES = [
-  'wifi',
-  'dishwasher',
-  'parking',
-  'washer',
-  'elevator',
-  'conditioner',
-];
-const OFFER_DESCRIPTION =
-  'Comfortable real estate in Tokyo. A cozy option for the weary traveler.';
-const OFFER_PHOTOS = [
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
-  'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
-];
-const LOCATION = {
-  LAT: {
-    MIN: 35.65,
-    MAX: 35.7,
-  },
-  LNG: {
-    MIN: 139.7,
-    MAX: 139.8,
-  },
-};
+import { getRandomPositiveFloat } from './utils/get-random-positive-float.js';
+import { getRandomPositiveInteger } from './utils/get-random-positive-integer.js';
+import { shuffleArray } from './utils/shuffle-array.js';
+import { AVATAR_RANGE,
+  OFFER_TITLE,
+  OFFER_TYPE,
+  OFFER_CHECKSET,
+  OFFER_FEATURES,
+  OFFER_DESCRIPTION,
+  OFFER_PHOTOS,
+  LOCATION } from './data.js';
 
 const SIMILAR_AD_COUNT = 10;
 
-function getRandomPositiveFloat(a, b, digits = 1) {
-  const lower = Math.min(Math.abs(a), Math.abs(b));
-  const upper = Math.max(Math.abs(a), Math.abs(b));
-  const result = Math.random() * (upper - lower) + lower;
-  return result.toFixed(digits);
-}
-
-function getRandomPositiveInteger(a, b) {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-}
-
 const getRandomArrayElement = (elements) =>
   elements[getRandomPositiveInteger(0, elements.length - 1)];
-
-const shuffleArray = (array) => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-  return array;
-};
 
 const createAd = () => {
   const location = {
