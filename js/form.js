@@ -61,3 +61,5 @@ const roomNumberChangeHandler = () => {
 };
 
 roomNumber.addEventListener('change', roomNumberChangeHandler);
+
+export { setStatusInactive, setStatusActive};
