@@ -29,7 +29,7 @@ const setStatusActive = () => {
   }
 };
 
-// set form validation
+// set rooms and guests validation
 const roomNumber = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 const guestsAmount = capacity.querySelectorAll('option');
@@ -62,4 +62,34 @@ const roomNumberChangeHandler = () => {
 
 roomNumber.addEventListener('change', roomNumberChangeHandler);
 
-export { setStatusInactive, setStatusActive};
+// set min price and placeholder validation
+const type = adForm.querySelector('#type');
+const price = adForm.querySelector('#price');
+
+const TypeOfHousing = {
+  bungalow: '0',
+  flat: '1000',
+  hotel: '2000',
+  house: '3000',
+  palace: '5000',
+};
+
+const TypeOfHousingChangeHandler = () => {
+  const minPrice = TypeOfHousing[type.value];
+  price.placeholder = minPrice;
+  price.min = minPrice;
+};
+
+type.addEventListener('change', TypeOfHousingChangeHandler);
+
+// set checkin/checkout time validation
+const adFormTime = adForm.querySelector('.ad-form__element--time');
+const timeIn = adFormTime.querySelector('#timein');
+const timeOut = adFormTime.querySelector('#timeout');
+
+adFormTime.addEventListener('change', (event) => {
+  timeOut.value = event.target.value;
+  timeIn.value = event.target.value;
+});
+
+export { setStatusInactive, setStatusActive };
