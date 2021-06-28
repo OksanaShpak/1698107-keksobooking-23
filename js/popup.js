@@ -1,7 +1,7 @@
 import { createAds } from './data.js';
 import { declOfNum } from './utils/declension-of-numbers.js';
 
-const mapCanvas = document.querySelector('#map-canvas');
+// const mapCanvas = document.querySelector('#map-canvas');
 const similarAdTemplate = document
   .querySelector('#card')
   .content.querySelector('.popup');
@@ -65,8 +65,9 @@ similarAds.forEach(({ offer, author }) => {
   }
 
   const popupFeatures = adElement.querySelector('.popup__features');
-  if (offer.features){
-    const modifiers = offer.features.map((feature) => `popup__feature--${feature}`);
+  if (offer.features) {
+    const modifiers = offer.features.map(
+      (feature) => `popup__feature--${feature}`);
     popupFeatures.querySelectorAll('.popup__feature').forEach((item) => {
       const modifier = item.classList[1];
       if (!modifiers.includes(modifier)) {
@@ -109,4 +110,6 @@ similarAds.forEach(({ offer, author }) => {
   similarAdFragment.appendChild(adElement);
 });
 
-mapCanvas.appendChild(similarAdFragment);
+// mapCanvas.appendChild(similarAdFragment);
+
+export { similarAdFragment };

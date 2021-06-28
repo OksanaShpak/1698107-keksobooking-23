@@ -35,7 +35,7 @@ const LOCATION = {
   },
 };
 
-const SIMILAR_AD_COUNT = 1;
+const SIMILAR_AD_COUNT = 10;
 
 const getRandomArrayElement = (elements) =>
   elements[getRandomPositiveInteger(0, elements.length - 1)];
