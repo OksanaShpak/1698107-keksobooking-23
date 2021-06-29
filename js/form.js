@@ -87,9 +87,9 @@ const adFormTime = adForm.querySelector('.ad-form__element--time');
 const timeIn = adFormTime.querySelector('#timein');
 const timeOut = adFormTime.querySelector('#timeout');
 
-adFormTime.addEventListener('change', (event) => {
-  timeOut.value = event.target.value;
-  timeIn.value = event.target.value;
+adFormTime.addEventListener('change', (evt) => {
+  timeOut.value = evt.target.value;
+  timeIn.value = evt.target.value;
 });
 
 export { setStatusInactive, setStatusActive };
