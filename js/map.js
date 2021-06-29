@@ -1,5 +1,5 @@
 import { setStatusActive } from './form.js';
-import { similarAdFragment } from './popup.js';
+import { renderCard } from './popup.js';
 import { createAds } from './data.js';
 
 const address = document.querySelector('#address');
@@ -42,14 +42,6 @@ mainPinMarker.on('moveend', (evt) => {
   address.value = `${newAddress.lat.toFixed(5)}, ${newAddress.lng.toFixed(5)}`;
 });
 
-// слой меток
-// наша дата createAds
-// const points = [];
-// // наш темпелейт similarAdFragment
-// const createCustomPopup = (point) => {
-//   return popupElement;
-// };
-
 const markerGroup = L.layerGroup().addTo(map);
 
 const createMarker = (ad) => {
@@ -69,19 +61,19 @@ const createMarker = (ad) => {
     },
   );
 
-  marker.addTo(markerGroup).bindPopup(similarAdFragment(ad), {
+  marker.addTo(markerGroup).bindPopup(() => renderCard(ad), {
     keepInView: true,
   });
 };
 
-createAds.forEach((ad) => {
+createAds().forEach((ad) => {
   createMarker(ad);
 });
 
-// TODO: не работает очистка
 // возвращение к исходному состоянию после отправки или очистки
-resetButtons.addEventListener('click', () => {
-  mainPinMarker.getLatLng(DEFAULT_COORDINATES);
+resetButtons.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  mainPinMarker.setLatLng(DEFAULT_COORDINATES);
   address.value = `${defaultAddress.lat}, ${defaultAddress.lng}`;
   map.setView(DEFAULT_COORDINATES, 10);
 });

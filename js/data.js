@@ -57,9 +57,15 @@ const createAd = () => {
       guests: getRandomPositiveInteger(1, 10),
       checkin: getRandomArrayElement(OFFER_CHECKSET),
       checkout: getRandomArrayElement(OFFER_CHECKSET),
-      features: shuffleArray(OFFER_FEATURES).slice(0, getRandomPositiveInteger(1, OFFER_FEATURES.length - 1)),
+      features: shuffleArray(OFFER_FEATURES).slice(
+        0,
+        getRandomPositiveInteger(1, OFFER_FEATURES.length - 1)
+      ),
       description: OFFER_DESCRIPTION,
-      photos: OFFER_PHOTOS.slice(0, getRandomPositiveInteger(1, OFFER_PHOTOS.length - 1)),
+      photos: OFFER_PHOTOS.slice(
+        0,
+        getRandomPositiveInteger(1, OFFER_PHOTOS.length - 1)
+      ),
     },
     location,
   };
