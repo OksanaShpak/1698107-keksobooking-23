@@ -82,7 +82,7 @@ const createMarker = (ads) => {
   });
 };
 
-getData((ads) => {
+getData(() => {
   createMarker();
 });
 
