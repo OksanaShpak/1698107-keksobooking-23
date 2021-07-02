@@ -1,6 +1,6 @@
 import { setStatusActive } from './form.js';
 import { renderCard } from './popup.js';
-import { createAds } from './data.js';
+import { getData } from './api.js';
 
 const address = document.querySelector('#address');
 const resetButtons = document.querySelector('.ad-form__element--submit');
@@ -9,12 +9,26 @@ const DEFAULT_COORDINATES = {
   lat: 35.69381,
   lng: 139.70351,
 };
+const ZOOM_MAP = 10;
+const FIXED_NUMBER = 5;
+
+const mainPin = {
+  url: '../img/main-pin.svg',
+  size: [52, 52],
+  anchor: [26, 52],
+};
+
+const Pin = {
+  url: '../img/pin.svg',
+  size: [40, 40],
+  anchor: [20, 40],
+};
 
 const map = L.map('map-canvas')
   .on('load', () => {
     setStatusActive();
   })
-  .setView(DEFAULT_COORDINATES, 10);
+  .setView(DEFAULT_COORDINATES, ZOOM_MAP);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution:
@@ -22,9 +36,9 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const mainPinIcon = L.icon({
-  iconUrl: '../img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconUrl: mainPin.url,
+  iconSize: mainPin.size,
+  iconAnchor: mainPin.anchor,
 });
 
 const mainPinMarker = L.marker(DEFAULT_COORDINATES, {
@@ -39,35 +53,37 @@ address.value = `${defaultAddress.lat}, ${defaultAddress.lng}`;
 
 mainPinMarker.on('moveend', (evt) => {
   const newAddress = evt.target.getLatLng();
-  address.value = `${newAddress.lat.toFixed(5)}, ${newAddress.lng.toFixed(5)}`;
+  address.value = `${newAddress.lat.toFixed(FIXED_NUMBER)}, ${newAddress.lng.toFixed(FIXED_NUMBER)}`;
 });
 
-const markerGroup = L.layerGroup().addTo(map);
+const pinIcon = L.icon({
+  iconUrl: Pin.url,
+  iconSize: Pin.size,
+  iconAnchor: Pin.anchor,
+});
 
-const createMarker = (ad) => {
-  const { location } = ad;
-  const icon = L.icon({
-    iconUrl: '../img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-  const marker = L.marker(
-    {
-      lat: location.lat,
-      lng: location.lng,
-    },
-    {
-      icon,
-    },
-  );
+const markersGroup = L.layerGroup().addTo(map);
 
-  marker.addTo(markerGroup).bindPopup(() => renderCard(ad), {
-    keepInView: true,
+const createMarker = (ads) => {
+  ads.forEach((ad) => {
+    const { location } = ad;
+    const marker = L.marker(
+      {
+        lat: location.lat,
+        lng: location.lng,
+      },
+      {
+        icon: pinIcon,
+      },
+    );
+    marker.addTo(markersGroup).bindPopup(() => renderCard(ad), {
+      keepInView: true,
+    });
   });
 };
 
-createAds().forEach((ad) => {
-  createMarker(ad);
+getData((ads) => {
+  createMarker();
 });
 
 // возвращение к исходному состоянию после отправки или очистки
@@ -75,5 +91,5 @@ resetButtons.addEventListener('click', (evt) => {
   evt.preventDefault();
   mainPinMarker.setLatLng(DEFAULT_COORDINATES);
   address.value = `${defaultAddress.lat}, ${defaultAddress.lng}`;
-  map.setView(DEFAULT_COORDINATES, 10);
+  map.setView(DEFAULT_COORDINATES, ZOOM_MAP);
 });
