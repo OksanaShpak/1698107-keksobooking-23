@@ -82,8 +82,8 @@ const createMarker = (ads) => {
   });
 };
 
-getData(() => {
-  createMarker();
+getData((ads) => {
+  createMarker(ads);
 });
 
 // возвращение к исходному состоянию после отправки или очистки
