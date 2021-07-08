@@ -1,6 +1,6 @@
 import { setStatusActive } from './form.js';
 import { renderCard } from './popup.js';
-import { getData } from './api.js';
+import { request } from './api.js';
 
 const address = document.querySelector('#address');
 const resetButtons = document.querySelector('.ad-form__element--submit');
@@ -11,6 +11,7 @@ const DEFAULT_COORDINATES = {
 };
 const ZOOM_MAP = 10;
 const FIXED_NUMBER = 5;
+const MAX_ADS = 10;
 
 const mainPin = {
   url: '../img/main-pin.svg',
@@ -24,15 +25,16 @@ const Pin = {
   anchor: [20, 40],
 };
 
+const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
 const map = L.map('map-canvas')
-  .on('load', () => {
-    setStatusActive();
-  })
+  // .on('load')
   .setView(DEFAULT_COORDINATES, ZOOM_MAP);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution:
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+L.tileLayer(TILE_LAYER, {
+  attribution: ATTRIBUTION,
 }).addTo(map);
 
 const mainPinIcon = L.icon({
@@ -74,7 +76,7 @@ const createMarker = (ads) => {
       },
       {
         icon: pinIcon,
-      },
+      }
     );
     marker.addTo(markersGroup).bindPopup(() => renderCard(ad), {
       keepInView: true,
@@ -82,9 +84,39 @@ const createMarker = (ads) => {
   });
 };
 
-getData((ads) => {
-  createMarker(ads);
-});
+let offers = [];
+
+const onSuccess = (data) => {
+  setStatusActive();
+  offers = data.slice();
+  createMarker(offers.slice(0, MAX_ADS));
+};
+
+const onError = () => {
+  const ALERT_SHOW_TIME = 5000;
+
+  const showAlert = () => {
+    const errorLoad = document.querySelector('#error-load').content.querySelector('.error-load');
+    errorLoad.style.zIndex = 100;
+    errorLoad.style.position = 'absolute';
+    errorLoad.style.left = 0;
+    errorLoad.style.top = 0;
+    errorLoad.style.right = 0;
+    errorLoad.style.padding = '10px 3px';
+    errorLoad.style.fontSize = '30px';
+    errorLoad.style.textAlign = 'center';
+    errorLoad.style.backgroundColor = 'red';
+
+    document.body.append(errorLoad);
+
+    setTimeout(() => {
+      errorLoad.remove();
+    }, ALERT_SHOW_TIME);
+  };
+  showAlert();
+};
+
+request(onSuccess, onError, 'GET');
 
 // возвращение к исходному состоянию после отправки или очистки
 resetButtons.addEventListener('click', (evt) => {
