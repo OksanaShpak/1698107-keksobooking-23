@@ -3,7 +3,7 @@ import { renderCard } from './popup.js';
 import { request } from './api.js';
 
 const address = document.querySelector('#address');
-const resetButtons = document.querySelector('.ad-form__element--submit');
+const resetButtons = document.querySelector('.ad-form__reset');
 
 const DEFAULT_COORDINATES = {
   lat: 35.69381,
@@ -30,7 +30,6 @@ const ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 const map = L.map('map-canvas')
-  // .on('load')
   .setView(DEFAULT_COORDINATES, ZOOM_MAP);
 
 L.tileLayer(TILE_LAYER, {
