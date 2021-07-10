@@ -75,7 +75,7 @@ const createMarker = (ads) => {
       },
       {
         icon: pinIcon,
-      }
+      },
     );
     marker.addTo(markersGroup).bindPopup(() => renderCard(ad), {
       keepInView: true,
