@@ -1,32 +1,28 @@
 // set form status
 const adForm = document.querySelector('.ad-form');
-const fieldsets = adForm.querySelectorAll('fieldset');
+const fieldsets = adForm.querySelectorAll('fieldset, .map__filters>select');
 const mapFilters = document.querySelector('.map__filters');
+
+const setDesabledFieldsets = () => {
+  fieldsets.forEach((item) => {
+    item.disabled = !item.disabled;
+  });
+};
 
 const setStatusInactive = () => {
   adForm.classList.add('ad-form--disabled');
 
-  for (const fieldset of fieldsets) {
-    fieldset.disabled = true;
-  }
+  setDesabledFieldsets();
 
   mapFilters.classList.add('map__filters--disabled');
-  for (let i = 0; i < mapFilters.length; i++) {
-    mapFilters[i].disabled = true;
-  }
 };
 
 const setStatusActive = () => {
   adForm.classList.remove('ad-form--disabled');
 
-  for (const fieldset of fieldsets) {
-    fieldset.disabled = false;
-  }
+  setDesabledFieldsets();
 
   mapFilters.classList.remove('map__filters--disabled');
-  for (let i = 0; i < mapFilters.length; i++) {
-    mapFilters[i].disabled = false;
-  }
 };
 
 // set rooms and guests validation
