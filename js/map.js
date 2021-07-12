@@ -1,9 +1,12 @@
 import { setStatusActive } from './form.js';
 import { renderCard } from './popup.js';
 import { request } from './api.js';
+import { filterAds } from './map-filters.js';
+import { debounce } from './utils/debounce.js';
 
 const address = document.querySelector('#address');
 const resetButtons = document.querySelector('.ad-form__reset');
+const mapFilters = document.querySelector('.map__filters');
 
 const DEFAULT_COORDINATES = {
   lat: 35.69381,
@@ -12,6 +15,7 @@ const DEFAULT_COORDINATES = {
 const ZOOM_MAP = 10;
 const FIXED_NUMBER = 5;
 const MAX_ADS = 10;
+const RENDER_DELAY = 500;
 
 const mainPin = {
   url: '../img/main-pin.svg',
@@ -85,10 +89,19 @@ const createMarker = (ads) => {
 
 let offers = [];
 
+const setMapFiltersChange = () => {
+  markersGroup.clearLayers();
+  createMarker(filterAds(offers));
+};
+
+const setBounceFix = debounce(()=> setMapFiltersChange(), RENDER_DELAY);
+
 const onSuccess = (data) => {
   setStatusActive();
   offers = data.slice();
   createMarker(offers.slice(0, MAX_ADS));
+
+  mapFilters.addEventListener('change', setBounceFix);
 };
 
 const onError = () => {
