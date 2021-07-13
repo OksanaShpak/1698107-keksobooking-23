@@ -1,9 +1,16 @@
 import { isEscEvent } from './utils/keyboard-actions.js';
 import { request } from './api.js';
+import { resetAvatar, resetAdPhotoPreview } from './img-upload.js';
+import { resetMap } from './map.js';
+
 
 const adForm = document.querySelector('.ad-form');
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
+const successTemplate = document
+  .querySelector('#success')
+  .content.querySelector('.success');
+const errorTemplate = document
+  .querySelector('#error')
+  .content.querySelector('.error');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
 const removePopup = () => {
@@ -41,11 +48,16 @@ const setErrorMessage = () => {
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
+  resetAvatar();
+  resetAdPhotoPreview();
+  resetMap();
 });
 
 const successfulFormSubmission = () => {
   setSuccessMessage();
   adForm.reset();
+  resetAvatar();
+  resetAdPhotoPreview();
 };
 
 adForm.addEventListener('submit', (evt) => {

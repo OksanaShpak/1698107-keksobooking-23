@@ -5,7 +5,6 @@ import { filterAds } from './map-filters.js';
 import { debounce } from './utils/debounce.js';
 
 const address = document.querySelector('#address');
-const resetButtons = document.querySelector('.ad-form__reset');
 const mapFilters = document.querySelector('.map__filters');
 
 const DEFAULT_COORDINATES = {
@@ -33,8 +32,7 @@ const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ATTRIBUTION =
   '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
-const map = L.map('map-canvas')
-  .setView(DEFAULT_COORDINATES, ZOOM_MAP);
+const map = L.map('map-canvas').setView(DEFAULT_COORDINATES, ZOOM_MAP);
 
 L.tileLayer(TILE_LAYER, {
   attribution: ATTRIBUTION,
@@ -58,7 +56,9 @@ address.value = `${defaultAddress.lat}, ${defaultAddress.lng}`;
 
 mainPinMarker.on('moveend', (evt) => {
   const newAddress = evt.target.getLatLng();
-  address.value = `${newAddress.lat.toFixed(FIXED_NUMBER)}, ${newAddress.lng.toFixed(FIXED_NUMBER)}`;
+  address.value = `${newAddress.lat.toFixed(
+    FIXED_NUMBER
+  )}, ${newAddress.lng.toFixed(FIXED_NUMBER)}`;
 });
 
 const pinIcon = L.icon({
@@ -77,10 +77,7 @@ const createMarker = (ads) => {
         lat: location.lat,
         lng: location.lng,
       },
-      {
-        icon: pinIcon,
-      },
-    );
+      {icon: pinIcon});
     marker.addTo(markersGroup).bindPopup(() => renderCard(ad), {
       keepInView: true,
     });
@@ -94,7 +91,7 @@ const setMapFiltersChange = () => {
   createMarker(filterAds(offers));
 };
 
-const setBounceFix = debounce(()=> setMapFiltersChange(), RENDER_DELAY);
+const setBounceFix = debounce(() => setMapFiltersChange(), RENDER_DELAY);
 
 const onSuccess = (data) => {
   setStatusActive();
@@ -108,7 +105,9 @@ const onError = () => {
   const ALERT_SHOW_TIME = 5000;
 
   const showAlert = () => {
-    const errorLoad = document.querySelector('#error-load').content.querySelector('.error-load');
+    const errorLoad = document
+      .querySelector('#error-load')
+      .content.querySelector('.error-load');
     errorLoad.style.zIndex = 100;
     errorLoad.style.position = 'absolute';
     errorLoad.style.left = 0;
@@ -130,10 +129,13 @@ const onError = () => {
 
 request(onSuccess, onError, 'GET');
 
-// возвращение к исходному состоянию после отправки или очистки
-resetButtons.addEventListener('click', (evt) => {
-  evt.preventDefault();
+
+const resetMap = () => {
+  mapFilters.reset();
+  setBounceFix();
   mainPinMarker.setLatLng(DEFAULT_COORDINATES);
   address.value = `${defaultAddress.lat}, ${defaultAddress.lng}`;
   map.setView(DEFAULT_COORDINATES, ZOOM_MAP);
-});
+};
+
+export { resetMap };

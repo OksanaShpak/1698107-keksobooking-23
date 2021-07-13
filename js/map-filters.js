@@ -43,5 +43,4 @@ const filterAds = (data) => {
   }
   return offers;
 };
-
 export { filterAds };
