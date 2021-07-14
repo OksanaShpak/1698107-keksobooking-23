@@ -6,6 +6,7 @@ import { debounce } from './utils/debounce.js';
 
 const address = document.querySelector('#address');
 const mapFilters = document.querySelector('.map__filters');
+const errorLoad = document.querySelector('#error-load').content.querySelector('.error-load');
 
 const DEFAULT_COORDINATES = {
   lat: 35.69381,
@@ -50,15 +51,12 @@ const mainPinMarker = L.marker(DEFAULT_COORDINATES, {
 });
 mainPinMarker.addTo(map);
 
-// заполнение адресса по умалчанию и обновление при смене положения пина
 const defaultAddress = mainPinMarker.getLatLng();
 address.value = `${defaultAddress.lat}, ${defaultAddress.lng}`;
 
 mainPinMarker.on('moveend', (evt) => {
   const newAddress = evt.target.getLatLng();
-  address.value = `${newAddress.lat.toFixed(
-    FIXED_NUMBER
-  )}, ${newAddress.lng.toFixed(FIXED_NUMBER)}`;
+  address.value = `${newAddress.lat.toFixed(FIXED_NUMBER)}, ${newAddress.lng.toFixed(FIXED_NUMBER)}`;
 });
 
 const pinIcon = L.icon({
@@ -105,9 +103,6 @@ const onError = () => {
   const ALERT_SHOW_TIME = 5000;
 
   const showAlert = () => {
-    const errorLoad = document
-      .querySelector('#error-load')
-      .content.querySelector('.error-load');
     errorLoad.style.zIndex = 100;
     errorLoad.style.position = 'absolute';
     errorLoad.style.left = 0;

@@ -5,12 +5,8 @@ import { resetMap } from './map.js';
 
 
 const adForm = document.querySelector('.ad-form');
-const successTemplate = document
-  .querySelector('#success')
-  .content.querySelector('.success');
-const errorTemplate = document
-  .querySelector('#error')
-  .content.querySelector('.error');
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const resetButton = adForm.querySelector('.ad-form__reset');
 
 const removePopup = () => {
@@ -56,6 +52,7 @@ resetButton.addEventListener('click', (evt) => {
 const successfulFormSubmission = () => {
   setSuccessMessage();
   adForm.reset();
+  resetMap();
   resetAvatar();
   resetAdPhotoPreview();
 };
