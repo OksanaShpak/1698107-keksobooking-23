@@ -2,6 +2,7 @@ import { isEscEvent } from './utils/keyboard-actions.js';
 import { request } from './api.js';
 import { resetAvatar, resetAdPhotoPreview } from './img-upload.js';
 import { resetMap } from './map.js';
+import { TypeOfHousingChangeHandler } from './form.js'
 
 
 const adForm = document.querySelector('.ad-form');
@@ -44,6 +45,7 @@ const setErrorMessage = () => {
 resetButton.addEventListener('click', (evt) => {
   evt.preventDefault();
   adForm.reset();
+  TypeOfHousingChangeHandler();
   resetAvatar();
   resetAdPhotoPreview();
   resetMap();
@@ -52,6 +54,7 @@ resetButton.addEventListener('click', (evt) => {
 const successfulFormSubmission = () => {
   setSuccessMessage();
   adForm.reset();
+  TypeOfHousingChangeHandler();
   resetMap();
   resetAvatar();
   resetAdPhotoPreview();

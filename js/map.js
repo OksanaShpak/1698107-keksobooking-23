@@ -23,7 +23,7 @@ const mainPin = {
   anchor: [26, 52],
 };
 
-const Pin = {
+const pin = {
   url: '../img/pin.svg',
   size: [40, 40],
   anchor: [20, 40],
@@ -60,9 +60,9 @@ mainPinMarker.on('moveend', (evt) => {
 });
 
 const pinIcon = L.icon({
-  iconUrl: Pin.url,
-  iconSize: Pin.size,
-  iconAnchor: Pin.anchor,
+  iconUrl: pin.url,
+  iconSize: pin.size,
+  iconAnchor: pin.anchor,
 });
 
 const markersGroup = L.layerGroup().addTo(map);

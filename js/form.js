@@ -75,4 +75,4 @@ adFormTime.addEventListener('change', (evt) => {
   timeIn.value = evt.target.value;
 });
 
-export { setStatusInactive, setStatusActive };
+export { setStatusInactive, setStatusActive, TypeOfHousingChangeHandler };
