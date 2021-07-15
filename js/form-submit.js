@@ -2,7 +2,7 @@ import { isEscEvent } from './utils/keyboard-actions.js';
 import { request } from './api.js';
 import { resetAvatar, resetAdPhotoPreview } from './img-upload.js';
 import { resetMap } from './map.js';
-import { TypeOfHousingChangeHandler } from './form.js'
+import { TypeOfHousingChangeHandler } from './form.js';
 
 
 const adForm = document.querySelector('.ad-form');
