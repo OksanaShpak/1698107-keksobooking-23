@@ -51,7 +51,7 @@ resetButton.addEventListener('click', (evt) => {
   resetMap();
 });
 
-const successfulFormSubmission = () => {
+const setSuccessfulFormSubmission = () => {
   setSuccessMessage();
   adForm.reset();
   TypeOfHousingChangeHandler();
@@ -64,6 +64,6 @@ adForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
   const data = new FormData(evt.target);
   if (adForm.checkValidity()) {
-    request(successfulFormSubmission, setErrorMessage, 'POST', data);
+    request(setSuccessfulFormSubmission, setErrorMessage, 'POST', data);
   }
 });

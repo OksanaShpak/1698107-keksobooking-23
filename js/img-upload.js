@@ -11,7 +11,7 @@ const avatarPreview = adForm.querySelector('.ad-form-header__preview img');
 const adPhotoInput = adForm.querySelector('.ad-form__input');
 const adPhotoPreview = adForm.querySelector('.ad-form__photo');
 
-const imgLoadingPreview = (input, preview) => {
+const setImgLoadingPreview = (input, preview) => {
   const file = input.files[0];
   const fileName = file.name.toLowerCase();
 
@@ -29,7 +29,7 @@ const imgLoadingPreview = (input, preview) => {
 };
 
 const avatarHandler = () => {
-  imgLoadingPreview(avatarInput, avatarPreview);
+  setImgLoadingPreview(avatarInput, avatarPreview);
 };
 
 const resetAvatar = () =>{
@@ -49,7 +49,7 @@ const resetAdPhotoPreview = () => {
   adPhotoPreview.innerHTML = '';
 };
 
-const imgPreparation = () => {
+const setImgPreparation = () => {
   const imgPreview = createImg();
   resetAdPhotoPreview();
   adPhotoPreview.appendChild(imgPreview);
@@ -57,7 +57,7 @@ const imgPreparation = () => {
 };
 
 const photoHandler = () => {
-  imgLoadingPreview(adPhotoInput, imgPreparation());
+  setImgLoadingPreview(adPhotoInput, setImgPreparation());
 };
 
 adPhotoInput.addEventListener('change', photoHandler);

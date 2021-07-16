@@ -1,4 +1,4 @@
-import { setStatusActive } from './form.js';
+import { setStatusActive , setStatusInactive } from './form.js';
 import { renderCard } from './popup.js';
 import { request } from './api.js';
 import { filterAds } from './map-filters.js';
@@ -16,6 +16,9 @@ const ZOOM_MAP = 10;
 const FIXED_NUMBER = 5;
 const MAX_ADS = 10;
 const RENDER_DELAY = 500;
+const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const ATTRIBUTION ='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+
 
 const mainPin = {
   url: '../img/main-pin.svg',
@@ -29,11 +32,13 @@ const pin = {
   anchor: [20, 40],
 };
 
-const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const ATTRIBUTION =
-  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+setStatusInactive();
 
-const map = L.map('map-canvas').setView(DEFAULT_COORDINATES, ZOOM_MAP);
+const map = L.map('map-canvas')
+  .on('load', () => {
+    setStatusActive();
+  })
+  .setView(DEFAULT_COORDINATES, ZOOM_MAP);
 
 L.tileLayer(TILE_LAYER, {
   attribution: ATTRIBUTION,
@@ -75,7 +80,7 @@ const createMarker = (ads) => {
         lat: location.lat,
         lng: location.lng,
       },
-      {icon: pinIcon});
+      { icon: pinIcon });
     marker.addTo(markersGroup).bindPopup(() => renderCard(ad), {
       keepInView: true,
     });
@@ -92,10 +97,8 @@ const setMapFiltersChange = () => {
 const setBounceFix = debounce(() => setMapFiltersChange(), RENDER_DELAY);
 
 const onSuccess = (data) => {
-  setStatusActive();
   offers = data.slice();
   createMarker(offers.slice(0, MAX_ADS));
-
   mapFilters.addEventListener('change', setBounceFix);
 };
 
@@ -123,7 +126,6 @@ const onError = () => {
 };
 
 request(onSuccess, onError, 'GET');
-
 
 const resetMap = () => {
   mapFilters.reset();
