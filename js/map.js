@@ -1,4 +1,4 @@
-import { setStatusActive , setStatusInactive } from './form.js';
+import { setStatusActive, setStatusInactive } from './form.js';
 import { renderCard } from './popup.js';
 import { request } from './api.js';
 import { filterAds } from './map-filters.js';
@@ -17,8 +17,8 @@ const FIXED_NUMBER = 5;
 const MAX_ADS = 10;
 const RENDER_DELAY = 500;
 const TILE_LAYER = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const ATTRIBUTION ='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-
+const ATTRIBUTION =
+  '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
 const mainPin = {
   url: '../img/main-pin.svg',
