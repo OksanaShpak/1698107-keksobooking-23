@@ -40,7 +40,6 @@ const setStatusInactive = () => {
 const setStatusActive = () => {
   adForm.classList.remove('ad-form--disabled');
   setDesabledFieldsets();
-  mapFilters.classList.remove('map__filters--disabled');
 };
 
 const setRoomsValidation = () => {

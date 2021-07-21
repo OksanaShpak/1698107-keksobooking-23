@@ -33,7 +33,6 @@ const pin = {
 };
 
 setStatusInactive();
-
 const map = L.map('map-canvas')
   .on('load', () => {
     setStatusActive();
@@ -97,6 +96,7 @@ const setMapFiltersChange = () => {
 const setBounceFix = debounce(() => setMapFiltersChange(), RENDER_DELAY);
 
 const onSuccess = (data) => {
+  mapFilters.classList.remove('map__filters--disabled');
   offers = data.slice();
   createMarker(offers.slice(0, MAX_ADS));
   mapFilters.addEventListener('change', setBounceFix);
